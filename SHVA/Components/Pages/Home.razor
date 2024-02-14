@@ -1,7 +1,90 @@
-﻿@page "/"
+﻿@rendermode InteractiveServer
+@page "/"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity 
+@inject RoleService rollservice;
 
-<PageTitle>Home</PageTitle>
+<AuthorizeView Roles="Admin">
+    <p>YES</p>
+</AuthorizeView>
+<label>Name</label>
+<input type="text"  @bind="NewRoleName"/>
+<button @onclick="AddRole">Add new Role</button>
 
-<h1>Hello, world!</h1>
+<table class="table">
+    <thead>
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Delete</th>
+    <th scope ="col">Edit</th>
+    </thead>
+    <tbody>
 
-Welcome to your new app.
+        @foreach (var role in Roles)
+        {
+            <tr>
+                <td> @role.Id </td>
+                <td> @role.Name</td>
+                <td><button class="btn btn-danger">Delete</button> </td>
+                <td><button class="btn btn-light"> Edit </button></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<RollSelector RoleSelected="e=> SelectedRole = e"/>
+<UserSelect UserSelected="e=> SelectedUser = e" />
+<button class="btn btn-primary" @onclick="AddRoletoUser"> Add Role to User</button>
+
+<table class="table">
+    <thead>
+        <th> UserID </th>
+        <th> RoleID </th>
+    </thead>
+    <tbody>
+        @foreach(var userRole in userRoles)
+        {
+            <tr>
+                <td>@userRole.UserId </td>
+                <td>@userRole.RoleId</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code
+{
+    List<IdentityRole> Roles => rollservice.GetRoles();
+    List<IdentityUserRole<string>> userRoles => rollservice.IdentityUserRoles();
+
+    string? NewRoleName;
+    string? SelectedUser;
+    string? SelectedRole;
+
+    void AddRole()
+    {
+        if (!string.IsNullOrWhiteSpace(NewRoleName))
+        {
+            var id = Guid.NewGuid().ToString();
+            var role = new IdentityRole { Id = id, Name = NewRoleName };
+            rollservice.AddRoll(role);
+            NewRoleName = string.Empty;
+        }
+
+    }
+    void AddRoletoUser()
+    {
+        if(SelectedRole != null && SelectedUser != null)
+        {
+            var userrole = new IdentityUserRole<string>() { UserId = SelectedUser, RoleId = SelectedRole };
+            SelectedRole = string.Empty;
+            SelectedUser = string.Empty;
+            rollservice.GiveUserRoll(userrole);
+
+        }
+    }
+
+}

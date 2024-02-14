@@ -1,0 +1,29 @@
+﻿@rendermode InteractiveServer
+@inject RoleService roleService
+
+<select class="form-select" @onchange="HandleUserSelected">
+    <option>-</option>
+    @foreach (var user in Users)
+    {
+        <option value="@user.Id">@user.UserName</option>
+    }
+
+</select>
+
+
+@code {
+    [Parameter]
+    public EventCallback<string> UserSelected { get; set; }
+
+    List<ApplicationUser> Users => roleService.GetUsers();
+
+    async Task HandleUserSelected(ChangeEventArgs e)
+    {
+        if (e.Value != null)
+        {
+            await UserSelected.InvokeAsync(e.Value.ToString());
+        }
+    }
+
+
+}

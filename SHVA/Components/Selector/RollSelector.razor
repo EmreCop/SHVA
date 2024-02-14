@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@rendermode InteractiveServer
+@inject RoleService roleService
+
+<select class="form-select" @onchange="HandlerRoleSelected">
+    <option>-</option>
+    @foreach (var role in Roles)
+    {
+        <option value="@role.Id">@role.Name</option>
+    }
+
+</select>
+
+
+@code {
+    [Parameter]
+    public EventCallback<string> RoleSelected { get; set; }
+
+    List<IdentityRole> Roles => roleService.GetRoles();
+
+    async Task HandlerRoleSelected(ChangeEventArgs e)
+    {
+        if (e.Value != null)
+        {
+            await RoleSelected.InvokeAsync(e.Value.ToString());
+        }
+    }
+
+
+}
