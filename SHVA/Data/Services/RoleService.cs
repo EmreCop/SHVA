@@ -22,9 +22,8 @@ namespace SHVA.Data.Services
 
         public List<IdentityRole> GetRoles()
         {
-            using var contex = _dbContextFactory.CreateDbContext();
-            var Roles = contex.Roles.ToList();
-            return Roles;
+            using var context = _dbContextFactory.CreateDbContext();
+            return [.. context.Roles];
         }
 
         public List<ApplicationUser> GetUsers()
