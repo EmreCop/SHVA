@@ -6,6 +6,7 @@ namespace SHVA.Data.Services
     public class RoleService(IDbContextFactory<ApplicationDbContext> dbContextFactory)
     {
         private IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory;
+
         public void AddRoll(IdentityRole role)
         {
             using var contex = _dbContextFactory.CreateDbContext();
@@ -16,8 +17,7 @@ namespace SHVA.Data.Services
         public IdentityRole GetRollbyID(string id)
         {
             using var contex = _dbContextFactory.CreateDbContext();
-            var roll = contex.Roles.SingleOrDefault(x => x.Id == id);
-            return roll ?? throw new InvalidOperationException();
+            return contex.Roles.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
         }
 
         public List<IdentityRole> GetRoles()
@@ -29,8 +29,7 @@ namespace SHVA.Data.Services
         public List<ApplicationUser> GetUsers()
         {
             using var contex = _dbContextFactory.CreateDbContext();
-            var users = contex.Users.ToList();
-            return users;
+            return [.. contex.Users]; 
         }
 
         public ApplicationUser GetUserbyID(string id)
@@ -54,5 +53,7 @@ namespace SHVA.Data.Services
             contex.SaveChanges();
         }
 
+
+       
     }
 }
