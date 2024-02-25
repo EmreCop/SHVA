@@ -4,6 +4,14 @@
 @attribute [Authorize(Roles = "Admin")];
 @inject WoningService woningService;
 
+
+
+
+
+
+
+
+
 <table class="table">
   <thead>
     <tr>
@@ -42,6 +50,7 @@
 @code {
   List<Woning> Woningen => woningService.GetWongingen();
 
+  void DeleteWoning(int id) => woningService.DeleteWoningbyId(id);  
 
 
 }
