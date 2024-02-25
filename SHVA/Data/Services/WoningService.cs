@@ -6,7 +6,7 @@ namespace SHVA.Data.Services
 {
   public class WoningService(IDbContextFactory<ApplicationDbContext> dbContextFactory)
   {
-    private IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory;
+    public IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory;
 
     public void AddWoning(Woning woning)
     {
@@ -36,14 +36,14 @@ namespace SHVA.Data.Services
 
     public void UpdateWoning(Woning woning)
     {
-
-      if (woning == null)
+      using var context = _dbContextFactory.CreateDbContext();
+      if (!context.Woningen.Contains(woning))
       {
         throw new Exception("woning Does not Exits");
       }
 
-      using var context = _dbContextFactory.CreateDbContext();
-      context.Update(woning);
+
+      context.Woningen.Update(woning);
       context.SaveChanges();
     }
   }
