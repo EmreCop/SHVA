@@ -8,14 +8,16 @@ namespace SHVA.Data.DatabaseTable
         [Key]
         public int Id { get; set; }
         public required string Name { get; set; }
-        public int Prijs { get; set; }
         public string? Description { get; set; }
         public string? Type { get; set; }
         public string? Adress { get; set; }
+        public string? Image { get; set; }
+
+        [ForeignKey("Room")]
+        public virtual List<int>? Rooms { get; set; }
 
         [ForeignKey("Student")]
         public virtual List<int>? StudentenIds { get; set; }
-        public bool Beschikbaar { get; set; }
-
+      
     }
 }

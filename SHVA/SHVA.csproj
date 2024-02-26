@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-SHVA-014832af-3572-4d5e-b4bc-378ca6c77a4c</UserSecretsId>
+    <NpmLastIntall>node_modules/./last-install</NpmLastIntall>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\model\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
+  <Target Name="CheckNPMIsInstalled" BeforeTargets="InstallNPM">
+    <Exec Command="npm -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+
+    <Error Condition="'$(ErrorCode)' != '0'" Text="You must install npm to run this task" />
+  </Target>
+
+  <Target Name="InstallNPM" BeforeTargets="BuildTailwindCSS">
+    <Exec Command="npm install" />
+    <Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="BuildTailwindCSS" BeforeTargets="Compile">
+    <Exec Command="npm run buildcss:debug" Condition="'$(Configuration)' == 'Debug'" />
+    <Exec Command="npm run buildcss:release" Condition="'$(Configuration)' == 'Release'" />
+  </Target>
+  
 </Project>
