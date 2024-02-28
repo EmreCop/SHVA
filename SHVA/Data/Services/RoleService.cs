@@ -26,6 +26,13 @@ namespace SHVA.Data.Services
       return [.. context.Roles];
     }
 
+    public void DeleteRole(string id)
+    {
+      using var context = _dbContextFactory.CreateDbContext();
+      context.Roles.Remove(GetRollbyID(id));
+      context.SaveChanges();
+    }
+
     public List<ApplicationUser> GetUsers()
     {
       using var contex = _dbContextFactory.CreateDbContext();
@@ -46,14 +53,7 @@ namespace SHVA.Data.Services
     }
 
 
-    public void GiveUserRoll(IdentityUserRole<string> userrole)
-    {
-      using var context = _dbContextFactory.CreateDbContext();
-      context.UserRoles.Add(userrole);
-      context.SaveChanges();
-    }
-
-    public void UpdateUserRoll(IdentityUserRole<string> userrole)
+    public void UserRoleManger(IdentityUserRole<string> userrole)
     {
       using var context = _dbContextFactory.CreateDbContext();
       var user = context.UserRoles.FirstOrDefault(x => x.UserId == userrole.UserId);
@@ -61,8 +61,9 @@ namespace SHVA.Data.Services
       {
         context.UserRoles.Remove(user);
         context.SaveChanges();
-        GiveUserRoll(userrole);
       }
+      context.UserRoles.Add(userrole);
+      context.SaveChanges();
     }
 
   }
