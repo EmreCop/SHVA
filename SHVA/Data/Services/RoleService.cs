@@ -56,8 +56,13 @@ namespace SHVA.Data.Services
     public void UpdateUserRoll(IdentityUserRole<string> userrole)
     {
       using var context = _dbContextFactory.CreateDbContext();
-      context.UserRoles.Update(userrole);
-      context.SaveChanges();
+      var user = context.UserRoles.FirstOrDefault(x => x.UserId == userrole.UserId);
+      if (user != null)
+      {
+        context.UserRoles.Remove(user);
+        context.SaveChanges();
+        GiveUserRoll(userrole);
+      }
     }
 
   }

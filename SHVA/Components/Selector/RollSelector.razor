@@ -2,7 +2,6 @@
 @rendermode InteractiveServer
 @inject RoleService roleService
 
-<label>Selecet a Role</label>
 <select  class="form-select" @onchange="HandlerRoleSelected">
     <option>-</option>
     @foreach (var role in Roles)

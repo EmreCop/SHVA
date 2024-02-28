@@ -2,7 +2,7 @@
 @page "/UserDashBoard"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
-@inject RoleService rollservice;
+@inject RoleService roleService;
 @attribute [Authorize(Roles = "Admin")];
 
 <label>Add New Role</label>
@@ -38,7 +38,7 @@
   <thead>
     <tr>
       <th> UserName </th>
-      <th> Rolename </th>
+      <th> Role </th>
     </tr>
   </thead>
   <tbody>
@@ -56,9 +56,9 @@
 
 @code
 {
-  List<IdentityRole> Roles => rollservice.GetRoles();
-  Dictionary<string, string> userRoles => rollservice.GetIdentityUserRoles();
-  List<ApplicationUser> Users => rollservice.GetUsers();
+  List<IdentityRole> Roles => roleService.GetRoles();
+  Dictionary<string, string> userRoles => roleService.GetIdentityUserRoles();
+  List<ApplicationUser> Users => roleService.GetUsers();
 
   string? NewRoleName;
 
@@ -68,7 +68,7 @@
     {
       var id = Guid.NewGuid().ToString();
       var role = new IdentityRole { Id = id, Name = NewRoleName };
-      rollservice.AddRoll(role);
+      roleService.AddRoll(role);
       NewRoleName = string.Empty;
     }
 
@@ -79,11 +79,11 @@
     var userrole = new IdentityUserRole<string>() { UserId = userId, RoleId = roleId };
     if (!userRoles.ContainsKey(userId))
     {
-      rollservice.GiveUserRoll(userrole);
+      roleService.GiveUserRoll(userrole);
     }
     else
     {
-      rollservice.UpdateUserRoll(userrole);
+      roleService.UpdateUserRoll(userrole);
     }
   }
 }
