@@ -33,9 +33,6 @@
   </tbody>
 </table>
 
-<RollSelector RoleSelected="e=> SelectedRole = e" />
-<UserSelect UserSelected="e=> SelectedUser = e" />
-<button class="btn btn-primary" @onclick="AddRoletoUser"> Add Role to User</button>
 
 <table class="table">
   <thead>
@@ -45,12 +42,11 @@
     </tr>
   </thead>
   <tbody>
-    @foreach (var userRole in userRoles)
+    @foreach (var user in Users)
     {
       <tr>
-
-        <td>@rollservice.GetUserbyID(userRole.UserId)</td>
-        <td>@rollservice.GetRollbyID(userRole.RoleId)</td>
+        <td>@user.UserName</td>
+        <td><RollSelector RoleSelected="e => RollManger(user.Id ,e)" CurentRole="@(userRoles.ContainsKey(user.Id) ? userRoles[user.Id] : null)" /></td>
       </tr>
     }
   </tbody>
@@ -61,11 +57,10 @@
 @code
 {
   List<IdentityRole> Roles => rollservice.GetRoles();
-  List<IdentityUserRole<string>> userRoles => rollservice.IdentityUserRoles();
+  Dictionary<string, string> userRoles => rollservice.GetIdentityUserRoles();
+  List<ApplicationUser> Users => rollservice.GetUsers();
 
   string? NewRoleName;
-  string? SelectedUser;
-  string? SelectedRole;
 
   void AddRole()
   {
@@ -78,17 +73,17 @@
     }
 
   }
-  void AddRoletoUser()
+
+  void RollManger(string userId, string roleId)
   {
-
-    if (SelectedRole != null && SelectedUser != null)
+    var userrole = new IdentityUserRole<string>() { UserId = userId, RoleId = roleId };
+    if (!userRoles.ContainsKey(userId))
     {
-      var userrole = new IdentityUserRole<string>() { UserId = SelectedUser, RoleId = SelectedRole };
-      SelectedRole = string.Empty;
-      SelectedUser = string.Empty;
       rollservice.GiveUserRoll(userrole);
-
+    }
+    else
+    {
+      rollservice.UpdateUserRoll(userrole);
     }
   }
-
 }

@@ -39,18 +39,25 @@ namespace SHVA.Data.Services
       return user ?? throw new InvalidOperationException();
     }
 
-    public List<IdentityUserRole<string>> IdentityUserRoles()
+    public Dictionary<string, string> GetIdentityUserRoles()
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      var userRoles = contex.UserRoles.ToList();
-      return userRoles;
+      using var context = _dbContextFactory.CreateDbContext();
+      return context.UserRoles.ToDictionary(ur => ur.UserId, ur => ur.RoleId);
     }
+
 
     public void GiveUserRoll(IdentityUserRole<string> userrole)
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      contex.UserRoles.Add(userrole);
-      contex.SaveChanges();
+      using var context = _dbContextFactory.CreateDbContext();
+      context.UserRoles.Add(userrole);
+      context.SaveChanges();
+    }
+
+    public void UpdateUserRoll(IdentityUserRole<string> userrole)
+    {
+      using var context = _dbContextFactory.CreateDbContext();
+      context.UserRoles.Update(userrole);
+      context.SaveChanges();
     }
 
   }
