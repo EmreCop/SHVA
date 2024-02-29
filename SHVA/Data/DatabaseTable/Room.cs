@@ -14,10 +14,10 @@ namespace SHVA.Data.DatabaseTable
     public int Prijs { get; set; }
     public int MaxAllowedStudents { get; set; }
 
-    [ForeignKey("Woning")]
+    [ForeignKey("Woningn")]
     public required int WoningID { get; set; }
 
-    [ForeignKey("Student")]
+    [ForeignKey("Studenten")]
     public virtual List<int>? StudentenIds { get; set; }
 
   }
