@@ -22,11 +22,15 @@
 
     @foreach (var role in Roles)
     {
+      
       <tr>
         <td> @role.Id </td>
         <td> @role.Name</td>
+        @if (role.Id != "6fa6823d-3004-47ee-b55b-86554da82ee9")
+        {
         <td><button class="btn btn-danger" @onclick="()=> roleService.DeleteRole(role.Id)">Delete</button> </td>
         <td><button class="btn btn-primary"> Edit </button></td>
+        }
       </tr>
     }
 
