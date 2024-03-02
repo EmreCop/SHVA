@@ -11,7 +11,7 @@ namespace SHVA.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "Huisvestingaanbieder",
+                name: "HuisVestingAanbieder",
                 table: "Woningen",
                 type: "int",
                 nullable: true);
@@ -21,7 +21,7 @@ namespace SHVA.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Huisvestingaanbieder",
+                name: "HuisVestingAanbieder",
                 table: "Woningen");
         }
     }

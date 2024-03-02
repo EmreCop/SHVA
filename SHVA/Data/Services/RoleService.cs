@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace SHVA.Data.Services
 {
   public class RoleService(IDbContextFactory<ApplicationDbContext> dbContextFactory)
   {
-    private IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory;
-
+    private readonly IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory;
     public void AddRoll(IdentityRole role)
     {
       using var contex = _dbContextFactory.CreateDbContext();

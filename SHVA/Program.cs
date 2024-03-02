@@ -33,6 +33,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddSingleton<RoleService>();
 builder.Services.AddSingleton<WoningService>();
+builder.Services.AddSingleton<HuisvestingAanbiederService>();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()

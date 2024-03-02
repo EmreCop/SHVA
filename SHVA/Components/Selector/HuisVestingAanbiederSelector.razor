@@ -1,0 +1,31 @@
+﻿@inject HuisvestingAanbiederService huisVestingAanbiederService
+
+<select class="form-select" @onchange="HandlerRoleSelected">
+  <option>-</option>
+  @foreach (var huisVestingAanbieder in HuisVestingAanbieders)
+  {
+    <option value="@huisVestingAanbieder.Id" selected="@Equals(huisVestingAanbieder.Id, CurentHuisVestingAanbieder)">@huisVestingAanbieder.Name</option>
+  }
+
+</select>
+
+
+@code {
+  [Parameter]
+  public EventCallback<int> HuisVestingAanbiederSelected { get; set; }
+
+  [Parameter]
+  public string? CurentHuisVestingAanbieder { get; set; }
+
+  List<HuisVestingAanbieder> HuisVestingAanbieders => huisVestingAanbiederService.GetHuisvestingAanbieders();
+
+  async Task HandlerRoleSelected(ChangeEventArgs e)
+  {
+    if (e.Value != null)
+    {
+      await HuisVestingAanbiederSelected.InvokeAsync((int)e.Value);
+    }
+  }
+
+
+}

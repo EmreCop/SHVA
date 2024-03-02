@@ -11,7 +11,7 @@ namespace SHVA.Data
         public DbSet<Woning> Woningen { get; set; }
         public DbSet<Room> Rooms {  get; set; }
 
-        public DbSet<Huisvestingaanbieder> Huisvestingaanbieders { get; set; }
+        public DbSet<HuisVestingAanbieder> Huisvestingaanbieders { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

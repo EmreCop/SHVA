@@ -41,8 +41,6 @@ namespace SHVA.Data.Services
       {
         throw new Exception("woning Does not Exits");
       }
-
-
       context.Woningen.Update(woning);
       context.SaveChanges();
     }

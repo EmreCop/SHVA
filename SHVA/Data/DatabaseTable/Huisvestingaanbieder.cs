@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHVA.Data.DatabaseTable
 {
-  public class Huisvestingaanbieder
+  public class HuisVestingAanbieder
   {
 
     [Key]

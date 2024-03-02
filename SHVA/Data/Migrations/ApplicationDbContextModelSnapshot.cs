@@ -251,7 +251,7 @@ namespace SHVA.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SHVA.Data.DatabaseTable.Huisvestingaanbieder", b =>
+            modelBuilder.Entity("SHVA.Data.DatabaseTable.HuisVestingAanbieder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -347,7 +347,7 @@ namespace SHVA.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Huisvestingaanbieder")
+                    b.Property<int?>("HuisVestingAanbieder")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")

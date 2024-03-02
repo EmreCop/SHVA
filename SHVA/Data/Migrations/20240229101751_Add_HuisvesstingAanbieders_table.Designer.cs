@@ -223,7 +223,7 @@ namespace SHVA.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("SHVA.Data.DatabaseTable.Huisvestingaanbieder", b =>
+            modelBuilder.Entity("SHVA.Data.DatabaseTable.HuisVestingAanbieder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
