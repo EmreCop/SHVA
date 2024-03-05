@@ -14,13 +14,15 @@
     <label>Description:</label>
     <input type="text" @bind="EditWoning.Description" />
     <label>Type:</label>
-    <input type="Type" @bind="EditWoning.Type"/>
+    <input type="Type" @bind="EditWoning.Type" />
     <label>Adress:</label>
-    <input type="text" @bind="EditWoning.Adress"/>
+    <input type="text" @bind="EditWoning.Adress" />
     <label>Image:</label>
-    <input type="text" @bind="EditWoning.Image"/>
+    <input type="text" @bind="EditWoning.Image" />
     <label>HuisvestingingAnbieder</label>
     <HuisVestingAanbiederSelector HuisVestingAanbiederSelected="e =>  EditWoning.Huisvestingaanbieder = e" />
+
+    <button class="btn btn-primary" @onclick="WoningManger">Save</button>
   </EditForm>
 }
 
@@ -66,13 +68,17 @@
 
 
 @code {
-  List<Woning> Woningen => woningService.GetWongingen();
+  List<Woning> Woningen => woningService.GetWoningen();
 
   Woning? EditWoning;
 
 
   void DeleteWoning(int id) => woningService.DeleteWoningbyId(id);
 
+  void WoningManger()
+  {
+
+  }
 
 
 }
