@@ -21,7 +21,7 @@ namespace SHVA.Data.Services
       return contex.Woningen.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
     }
 
-    public List<Woning> GetWongingen()
+    public List<Woning> GetWoningen()
     {
       using var context = _dbContextFactory.CreateDbContext();
       return [.. context.Woningen];
@@ -41,8 +41,6 @@ namespace SHVA.Data.Services
       {
         throw new Exception("woning Does not Exits");
       }
-
-
       context.Woningen.Update(woning);
       context.SaveChanges();
     }

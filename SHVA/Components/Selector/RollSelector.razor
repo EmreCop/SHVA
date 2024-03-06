@@ -2,20 +2,22 @@
 @rendermode InteractiveServer
 @inject RoleService roleService
 
-<label>Selecet a Role</label>
-<select class="form-select" @onchange="HandlerRoleSelected">
+<select  class="form-select" @onchange="HandlerRoleSelected">
     <option>-</option>
     @foreach (var role in Roles)
     {
-        <option value="@role.Id">@role.Name</option>
+    <option value="@role.Id" selected="@Equals(role.Id, CurentRole)">@role.Name</option>
     }
 
 </select>
 
 
 @code {
-    [Parameter]
-    public EventCallback<string> RoleSelected { get; set; }
+  [Parameter]
+  public EventCallback<string> RoleSelected { get; set; }
+
+  [Parameter]
+  public string? CurentRole { get; set; }
 
     List<IdentityRole> Roles => roleService.GetRoles();
 

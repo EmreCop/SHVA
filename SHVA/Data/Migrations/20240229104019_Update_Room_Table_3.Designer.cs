@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SHVA.Data;
 
@@ -11,9 +12,11 @@ using SHVA.Data;
 namespace SHVA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240229104019_Update_Room_Table_3")]
+    partial class Update_Room_Table_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,13 +50,6 @@ namespace SHVA.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "6fa6823d-3004-47ee-b55b-86554da82ee9",
-                            Name = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -141,13 +137,6 @@ namespace SHVA.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "c17ea01a-bd38-4d4d-9c97-597c481c0542",
-                            RoleId = "6fa6823d-3004-47ee-b55b-86554da82ee9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -232,23 +221,6 @@ namespace SHVA.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c17ea01a-bd38-4d4d-9c97-597c481c0542",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "06be31d8-2cc6-4fcb-9c11-5619f83402df",
-                            Email = "Admin@Admin.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHs8qsBZiHjVXTwnpf7lLaD5a+csu3RzglxieaBDv2UwV5XoZADRAMrfENY6VOXqFQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ZKZ4CTLIQRJTWOY6QFECHZLSQUOZNEBQ",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("SHVA.Data.DatabaseTable.HuisVestingAanbieder", b =>

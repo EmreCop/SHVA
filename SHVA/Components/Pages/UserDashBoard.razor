@@ -2,7 +2,7 @@
 @page "/UserDashBoard"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
-@inject RoleService rollservice;
+@inject RoleService roleService;
 @attribute [Authorize(Roles = "Admin")];
 
 <label>Add New Role</label>
@@ -22,35 +22,35 @@
 
     @foreach (var role in Roles)
     {
+      
       <tr>
         <td> @role.Id </td>
         <td> @role.Name</td>
-        <td><button class="btn btn-danger">Delete</button> </td>
-        <td><button class="btn btn-light"> Edit </button></td>
+        @if (role.Id != "6fa6823d-3004-47ee-b55b-86554da82ee9")
+        {
+        <td><button class="btn btn-danger" @onclick="()=> roleService.DeleteRole(role.Id)">Delete</button> </td>
+        <td><button class="btn btn-primary"> Edit </button></td>
+        }
       </tr>
     }
 
   </tbody>
 </table>
 
-<RollSelector RoleSelected="e=> SelectedRole = e" />
-<UserSelect UserSelected="e=> SelectedUser = e" />
-<button class="btn btn-primary" @onclick="AddRoletoUser"> Add Role to User</button>
 
 <table class="table">
   <thead>
     <tr>
       <th> UserName </th>
-      <th> Rolename </th>
+      <th> Role </th>
     </tr>
   </thead>
   <tbody>
-    @foreach (var userRole in userRoles)
+    @foreach (var user in Users)
     {
       <tr>
-
-        <td>@rollservice.GetUserbyID(userRole.UserId)</td>
-        <td>@rollservice.GetRollbyID(userRole.RoleId)</td>
+        <td>@user.UserName</td>
+        <td><RollSelector RoleSelected="e => UserRoleManger(user.Id ,e)" CurentRole="@(userRoles.ContainsKey(user.Id) ? userRoles[user.Id] : null)" /></td>
       </tr>
     }
   </tbody>
@@ -60,12 +60,11 @@
 
 @code
 {
-  List<IdentityRole> Roles => rollservice.GetRoles();
-  List<IdentityUserRole<string>> userRoles => rollservice.IdentityUserRoles();
+  List<IdentityRole> Roles => roleService.GetRoles();
+  Dictionary<string, string> userRoles => roleService.GetIdentityUserRoles();
+  List<ApplicationUser> Users => roleService.GetUsers();
 
   string? NewRoleName;
-  string? SelectedUser;
-  string? SelectedRole;
 
   void AddRole()
   {
@@ -73,22 +72,15 @@
     {
       var id = Guid.NewGuid().ToString();
       var role = new IdentityRole { Id = id, Name = NewRoleName };
-      rollservice.AddRoll(role);
+      roleService.AddRoll(role);
       NewRoleName = string.Empty;
     }
 
   }
-  void AddRoletoUser()
+
+  void UserRoleManger(string userId, string roleId)
   {
-
-    if (SelectedRole != null && SelectedUser != null)
-    {
-      var userrole = new IdentityUserRole<string>() { UserId = SelectedUser, RoleId = SelectedRole };
-      SelectedRole = string.Empty;
-      SelectedUser = string.Empty;
-      rollservice.GiveUserRoll(userrole);
-
-    }
+    var userrole = new IdentityUserRole<string>() { UserId = userId, RoleId = roleId };
+    roleService.UserRoleManger(userrole);
   }
-
 }
