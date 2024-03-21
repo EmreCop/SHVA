@@ -1,4 +1,5 @@
-﻿@namespace UIComponents
+﻿@namespace SHVA.Components.UIComponants
+
 
 <div class="modal" style="display: @(IsVisible ? "block" : "none")">
   <div class="modal-content">
@@ -14,8 +15,8 @@
   [Parameter]
   public EventCallback<bool> IsVisibleChanged { get; set; }
 
-  [Parameter]
-  public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
   private async Task CloseModal()
   {
