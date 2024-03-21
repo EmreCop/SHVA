@@ -1,26 +1,25 @@
-﻿@namespace SHVA.Components.UIComponants
-@using Microsoft.AspNetCore.Components
+﻿@namespace UIComponents
 
 <div class="modal" style="display: @(IsVisible ? "block" : "none")">
-    <div class="modal-content">
-        <span class="close" @onclick="CloseModal">&times;</span>
-        @ChildContent
-    </div>
+  <div class="modal-content">
+    <span class="close" @onclick="CloseModal">&times;</span>
+    @ChildContent
+  </div>
 </div>
 
 @code {
-    [Parameter]
-    public bool IsVisible { get; set; }
+  [Parameter]
+  public bool IsVisible { get; set; }
 
-    [Parameter]
-    public EventCallback<bool> IsVisibleChanged { get; set; }
+  [Parameter]
+  public EventCallback<bool> IsVisibleChanged { get; set; }
 
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
 
-    private async Task CloseModal()
-    {
-        IsVisible = false;
-        await IsVisibleChanged.InvokeAsync(IsVisible);
-    }
+  private async Task CloseModal()
+  {
+    IsVisible = false;
+    await IsVisibleChanged.InvokeAsync(IsVisible);
+  }
 }

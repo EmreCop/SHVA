@@ -1,16 +1,15 @@
 ﻿@page "/"
-@using UIComponents
 
 <h1>Welcome to the Home Page!</h1>
 
 <button @onclick="ShowModal">Open Modal</button>
 
-<Modal @bind-IsVisible="IsModalVisible">
-    <div>
-        <!-- Your modal content goes here -->
-        <h2>Modal Title</h2>
-        <p>This is a modal content.</p>
-    </div>
+<Modal IsVisible="@IsModalVisible" IsVisibleChanged="ModalVisibilityChanged">
+  <div>
+    <!-- Your modal content goes here -->
+    <h2>Modal Title</h2>
+    <p>This is a modal content.</p>
+  </div>
 </Modal>
 
 <h1 class="text-sm"> Noah is Klein</h1>
@@ -22,6 +21,6 @@
     {
         IsModalVisible = true;
     }
+
+    async Task ModalVisibilityChanged(bool visible) => IsModalVisible = visible;
 }
-
-
