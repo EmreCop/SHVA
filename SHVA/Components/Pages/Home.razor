@@ -1,26 +1,24 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
-<h1>Welcome to the Home Page!</h1>
+<button class="btn btn-primary" @onclick="ChangeModalVisibletity">Open Modal</button>
 
-<button @onclick="ShowModal">Open Modal</button>
-
-<Modal @bind-IsVisible="IsModalVisible">
+<Modal IsVisible="IsModalVisible" @ref="modalRef" >
     <div>
-        <!-- Your modal content goes here -->
-        <h2>Modal Title</h2>
-        <p>This is a modal content.</p>
+    <h1 class="text-xl"> Noah is Klein</h1>
     </div>
 </Modal>
 
 <h1 class="text-sm"> Noah is Klein</h1>
 
 @code {
+
+  Modal? modalRef;
+
     bool IsModalVisible = false;
 
-    void ShowModal()
-    {
-        IsModalVisible = true;
-    }
+    void ChangeModalVisibletity() =>IsModalVisible = !IsModalVisible;
+
 }
 
 

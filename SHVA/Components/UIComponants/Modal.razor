@@ -16,7 +16,7 @@
     public EventCallback<bool> IsVisibleChanged { get; set; }
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     private async Task CloseModal()
     {
