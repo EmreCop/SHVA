@@ -5,9 +5,12 @@
 @inject RoleService roleService;
 @attribute [Authorize(Roles = "Admin")];
 
+<h4>Rolls</h4>
+<hr/>
+
 <label>Add New Role</label>
 <input type="text" @bind="NewRoleName" placeholder="Name" />
-<button @onclick="AddRole">Add new Role</button>
+<button class="brn btn-primary" @onclick="AddRole">Add new Role</button>
 
 <table class="table">
   <thead>
@@ -37,6 +40,10 @@
   </tbody>
 </table>
 
+<br />
+
+<h4>Add Role to User </h4>
+<hr />
 
 <table class="table">
   <thead>

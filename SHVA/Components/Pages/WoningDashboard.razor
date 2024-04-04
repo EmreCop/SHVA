@@ -6,7 +6,7 @@
 
 <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
 
-<Modal>
+
   @if (TempWoning != null)
   {
     <EditForm Model="TempWoning">
@@ -26,7 +26,7 @@
       <button class="btn btn-primary" @onclick="WoningManger">Save</button>
     </EditForm>
   }
-</Modal>
+
 
 
 <table class="table">
@@ -71,9 +71,7 @@
   </tbody>
 </table>
 
-<Modal>
 
-</Modal>
 
 
 @code {
@@ -81,6 +79,7 @@
 
   Woning? TempWoning;
 
+  bool IsNewWoning;
 
   void DeleteWoning(int Id) => woningService.DeleteWoningbyId(Id);
 
@@ -88,7 +87,7 @@
   {
     if (TempWoning != null)
     {
-      if (!Woningen.Contains(TempWoning))
+      if (!Woningen.Contains(TempWoning) && IsNewWoning)
       {
         woningService.AddWoning(TempWoning);
       }
@@ -104,12 +103,14 @@
   void AddWoning()
   {
     TempWoning = new Woning { Name = "" };
+    IsNewWoning = true;
     //openmodal als ik die ooit werkent krijg Fix dit a.u.b Aaron!!!
   }
 
   void EditWoning(Woning woning)
   {
     TempWoning = woning;
+    IsNewWoning = false;
     //openmodal als ik die ooit werkent krijg Fix dit a.u.bAaron!!!
   }
 
