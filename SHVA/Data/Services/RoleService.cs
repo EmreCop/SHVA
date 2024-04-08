@@ -9,15 +9,15 @@ namespace SHVA.Data.Services
     private readonly IDbContextFactory<ApplicationDbContext> _dbContextFactory = dbContextFactory;
     public void AddRoll(IdentityRole role)
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      contex.Roles.Add(role);
-      contex.SaveChanges();
+      using var context = _dbContextFactory.CreateDbContext();
+      context.Roles.Add(role);
+      context.SaveChanges();
     }
 
     public IdentityRole GetRollbyID(string id)
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      return contex.Roles.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
+      using var context = _dbContextFactory.CreateDbContext();
+      return context.Roles.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
     }
 
     public List<IdentityRole> GetRoles()
@@ -35,14 +35,14 @@ namespace SHVA.Data.Services
 
     public List<ApplicationUser> GetUsers()
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      return [.. contex.Users];
+      using var context = _dbContextFactory.CreateDbContext();
+      return [.. context.Users];
     }
 
-    public ApplicationUser GetUserbyID(string id)
+    public ApplicationUser GetUserByID(string id)
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      var user = contex.Users.SingleOrDefault(x => x.Id == id);
+      using var context = _dbContextFactory.CreateDbContext();
+      var user = context.Users.SingleOrDefault(x => x.Id == id);
       return user ?? throw new InvalidOperationException();
     }
 
@@ -53,16 +53,16 @@ namespace SHVA.Data.Services
     }
 
 
-    public void UserRoleManger(IdentityUserRole<string> userrole)
+    public void UserRoleManger(IdentityUserRole<string> userRole)
     {
       using var context = _dbContextFactory.CreateDbContext();
-      var user = context.UserRoles.FirstOrDefault(x => x.UserId == userrole.UserId);
+      var user = context.UserRoles.FirstOrDefault(x => x.UserId == userRole.UserId);
       if (user != null)
       {
         context.UserRoles.Remove(user);
         context.SaveChanges();
       }
-      context.UserRoles.Add(userrole);
+      context.UserRoles.Add(userRole);
       context.SaveChanges();
     }
 
