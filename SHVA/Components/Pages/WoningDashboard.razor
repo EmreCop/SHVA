@@ -6,27 +6,10 @@
 
 <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
 
-
-  @if (TempWoning != null)
-  {
-    <EditForm Model="TempWoning">
-      <label>Name:</label>
-      <input type="text" @bind="TempWoning.Name" />
-      <label>Description:</label>
-      <input type="text" @bind="TempWoning.Description" />
-      <label>Type:</label>
-      <input type="Type" @bind="TempWoning.Type" />
-      <label>Adress:</label>
-      <input type="text" @bind="TempWoning.Adress" />
-      <label>Image:</label>
-      <input type="text" @bind="TempWoning.Image" />
-      <label>HuisvestingingAnbieder</label>
-      <HuisVestingAanbiederSelector HuisVestingAanbiederSelected="e =>  TempWoning.Huisvestingaanbieder = e" />
-
-      <button class="btn btn-primary" @onclick="WoningManger">Save</button>
-    </EditForm>
-  }
-
+@if (TempWoning != null)
+{
+  <WoningModal woning="TempWoning" Edited="Woningen.Contains(TempWoning)" />
+}
 
 
 <table class="table">
@@ -83,22 +66,7 @@
 
   void DeleteWoning(int Id) => woningService.DeleteWoningbyId(Id);
 
-  void WoningManger()
-  {
-    if (TempWoning != null)
-    {
-      if (!Woningen.Contains(TempWoning) && IsNewWoning)
-      {
-        woningService.AddWoning(TempWoning);
-      }
-      else
-      {
-        woningService.UpdateWoning(TempWoning);
-      }
 
-      TempWoning = null;
-    }
-  }
 
   void AddWoning()
   {
