@@ -1,7 +1,7 @@
 ﻿@rendermode InteractiveServer
 @using SHVA.Data.Services
 @page "/WoningDashBoard"
-@attribute [Authorize(Roles = "Admin")];
+@attribute [Authorize(Roles = "Admin , Worker")];
 @inject WoningService woningService;
 
 <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
