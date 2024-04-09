@@ -1,5 +1,21 @@
-﻿<h3>HuisVestingAabiedersDashBoard</h3>
+﻿@page "/Huisvestingdashboard"
+@rendermode InteractiveServer
+@inject HuisvestingAanbiederService  HuisvestingAanbiederService;
+
+
+
+
+
+
+
+
+
+
+
+
 
 @code {
+  List<HuisVestingAanbieder> HuisVestingAanbieders => HuisvestingAanbiederService.GetHuisvestingAanbieders();
+
 
 }
