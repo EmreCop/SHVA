@@ -1,0 +1,51 @@
+﻿@rendermode InteractiveServer
+@using SHVA.Data.Services
+@attribute [Authorize(Roles = "Admin")];
+@inject WoningService woningService
+
+
+@*<Modal>*@
+
+  @if (woning != null)
+{
+  <form>
+    <label>Name:</label>
+    <input type="text" @bind="woning.Name" />
+    <label>Description:</label>
+    <input type="text" @bind="woning.Description" />
+    <label>Type:</label>
+    <input type="Type" @bind="woning.Type" />
+    <label>Adress:</label>
+    <input type="text" @bind="woning.Adress" />
+    <label>Image:</label>
+    <input type="text" @bind="woning.Image" />
+    <label>HuisvestingingAnbieder</label>
+    <HuisVestingAanbiederSelector HuisVestingAanbiederSelected="e =>  woning.Huisvestingaanbieder = e" />
+
+    <button class="btn btn-primary" @onclick="WoningManger">Save</button>
+  </form>
+}
+@*</Modal>*@
+
+@code {
+  [Parameter]
+  public Woning? woning { get; set; }
+
+  [Parameter]
+  public bool Edited { get; set; }
+
+  void WoningManger()
+  {
+    if (woning != null)
+    {
+      if (!Edited)
+      {
+        woningService.AddWoning(woning);
+      }
+      else
+      {
+        woningService.UpdateWoning(woning);
+      }
+    }
+  }
+}

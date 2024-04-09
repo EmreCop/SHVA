@@ -32,9 +32,9 @@ builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddSingleton<RoleService>();
-builder.Services.AddSingleton<WoningService>();
-builder.Services.AddSingleton<HuisvestingAanbiederService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<WoningService>();
+builder.Services.AddScoped<HuisvestingAanbiederService>();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
