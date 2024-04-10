@@ -1,0 +1,94 @@
+﻿@page "/{WoningName}/Rooms"
+@inject RoomService roomService
+@rendermode InteractiveServer
+
+<button class="btn btn-primary" @onclick="AddRoom">Add Room</button>
+
+
+<h4>Rooms</h4>
+<hr />
+
+@if (Woning != null && Woning.Rooms != null)
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">ImageURl</th>
+        <th scope="col">Prijs</th>
+        <th scope="col">Beschikbaar</th>
+        <th scope="col">MaxAllowedStudents</th>
+        <th scope="col">Woning</th>
+        <th scope="col">Studenten</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var roomID in Woning.Rooms)
+      {
+        var room = roomService.GetRoomByID(roomID);
+        <tr>
+          <td scope="row">@room.Id</td>
+          <td>@room.Name</td>
+          <td>@room.Image</td>
+          <td>@room.Prijs</td>
+          <td>@room.Beschikbaar</td>
+          <td>@room.MaxAllowedStudents</td>
+          <td>@Woning.Name</td>
+          <td><button class="btn btn-primary" >Studenten</button></td>
+          <td><button class="btn btn-secondary" >Edit</button></td>
+          <td><button class="btn btn-danger" @onclick="()=>RemoveRoom(roomID)">Delete</button></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+
+
+
+}
+
+@code {
+  [Parameter]
+  public string? WoningName { get; set; }
+
+  Woning? Woning { get; set; }
+    
+  void AddRoom()
+  {
+    if (Woning != null)
+    {
+      if (Woning.Rooms == null)
+      {
+        Woning.Rooms = [];
+      }
+      var newRoom = new Room { WoningID = Woning.Id };
+      // andere dinge van room moeten in modal 
+      roomService.AddRoom(newRoom);
+      Woning.Rooms.Add(newRoom.Id);
+      roomService.UpdateWoning(Woning);
+    }
+  }
+
+  void RemoveRoom(int id)
+  {
+    if (Woning != null)
+    {
+      Woning.Rooms?.Remove(id);
+      roomService.UpdateWoning(Woning);
+    }
+  }
+
+
+  protected override void OnInitialized()
+  {
+    if (WoningName != null)
+    {
+      Woning = roomService.GetWoningByName(WoningName);
+    }
+  }
+
+}
+

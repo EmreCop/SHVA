@@ -34,6 +34,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<WoningService>();
+builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<HuisvestingAanbiederService>();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
