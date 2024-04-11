@@ -1,10 +1,12 @@
 ﻿@namespace SHVA.Components.UIComponants
 
 
-<div class="modal" style="display: @(IsVisible ? "block" : "none")">
-  <div class="modal-content">
-    <span class="close" @onclick="CloseModal">&times;</span>
-    @ChildContent
+<div class="modal-backdrop" style="display: @(IsVisible ? "block" : "none")">
+  <div class="modal" style="display: @(IsVisible ? "block" : "none")">
+    <div class="modal-content">
+      <span class="close" @onclick="CloseModal">&times;</span>
+      @ChildContent
+    </div>
   </div>
 </div>
 
@@ -15,8 +17,8 @@
   [Parameter]
   public EventCallback<bool> IsVisibleChanged { get; set; }
 
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+  [Parameter]
+  public RenderFragment? ChildContent { get; set; }
 
   private async Task CloseModal()
   {
