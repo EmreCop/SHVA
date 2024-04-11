@@ -46,6 +46,18 @@ namespace SHVA.Data.Services
       return user ?? throw new InvalidOperationException();
     }
 
+    public void DeleteUser(ApplicationUser user) {
+      using var context = _dbContextFactory.CreateDbContext();
+      context.Users.Remove(user);
+      context.SaveChanges();
+    }
+
+    public void UpdateUser(ApplicationUser user) {
+      using var context = _dbContextFactory.CreateDbContext();
+      context.Users.Update(user);
+      context.SaveChanges();
+    }
+
     public Dictionary<string, string> GetIdentityUserRoles()
     {
       using var context = _dbContextFactory.CreateDbContext();

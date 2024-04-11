@@ -22,20 +22,22 @@
 
   <tbody>
     @foreach (var user in Users)
-    {
-      <tr scope="row">
-        <td> @user.Id</td>
-        <td>@user.UserName </td>
-        <td>@user.Email</td>
-        <td>@user.EmailConfirmed</td>
-        <td><button class="btn btn-danger">Delete</button></td>
-      </tr>
+    {@if (user.Id != "c17ea01a-bd38-4d4d-9c97-597c481c0542")
+      {
+        <tr scope="row">
+          <td> @user.Id</td>
+          <td>@user.UserName </td>
+          <td>@user.Email</td>
+          <td>@user.EmailConfirmed</td>
+          <td><button class="btn btn-danger" @onclick="()=>DeleteUser(user)">Delete</button></td>
+        </tr>
+       }
     }
   </tbody>
 </table>
 
 
-<h4>Rolls</h4>
+<h4>Roles</h4>
 <hr />
 
 <label>Add New Role</label>
@@ -120,7 +122,15 @@
 
   void UserRoleManger(string userId, string roleId)
   {
-    var userrole = new IdentityUserRole<string>() { UserId = userId, RoleId = roleId };
-    roleService.UserRoleManger(userrole);
+    var userRole = new IdentityUserRole<string>() { UserId = userId, RoleId = roleId };
+    roleService.UserRoleManger(userRole);
   }
+
+  void DeleteUser(ApplicationUser user)
+  {
+    roleService.DeleteUser(user);
+
+    //Send Email to Deleted User
+  }
+
 }

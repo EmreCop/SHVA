@@ -9,15 +9,15 @@ namespace SHVA.Data.Services
 
     public void AddHuisvestingAanbieder(HuisVestingAanbieder huisvestingAanbieder)
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      contex.Huisvestingaanbieders.Add(huisvestingAanbieder);
-      contex.SaveChanges();
+      using var context = _dbContextFactory.CreateDbContext();
+      context.Huisvestingaanbieders.Add(huisvestingAanbieder);
+      context.SaveChanges();
     }
 
     public HuisVestingAanbieder GetHuisvestingAanbiederbyID(int id)
     {
-      using var contex = _dbContextFactory.CreateDbContext();
-      return contex.Huisvestingaanbieders.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
+      using var context = _dbContextFactory.CreateDbContext();
+      return context.Huisvestingaanbieders.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
     }
 
     public List<HuisVestingAanbieder> GetHuisvestingAanbieders()
