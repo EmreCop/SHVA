@@ -1,0 +1,32 @@
+﻿@inject RoomService roomService
+@rendermode InteractiveServer
+
+@if (room != null)
+{
+  @*Modal*@
+  <h5>Room</h5>
+  <hr />
+  <form>
+    <label>Name</label>
+    <input type="text"  @bind="room.Name" />
+
+    <label>Image</label>
+    <input type="text" @bind="room.Image" />
+
+    <label>Prijs</label>
+    <input type="number" @bind="room.Prijs" />
+
+    <label>Max Allowed Students</label>
+    <input type="number" @bind="room.MaxAllowedStudents" />
+
+
+  </form>
+  @*Modal*@
+}
+
+
+@code {
+  [Parameter]
+  public Room? room { get; set; }
+
+}
