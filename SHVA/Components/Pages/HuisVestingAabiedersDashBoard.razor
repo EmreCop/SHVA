@@ -1,21 +1,44 @@
-﻿@page "/Huisvestingdashboard"
-@rendermode InteractiveServer
-@inject HuisvestingAanbiederService  HuisvestingAanbiederService;
+﻿@rendermode InteractiveServer
+@using SHVA.Data.Services
+@page "/HuisVestingDashBoard"
+@attribute [Authorize(Roles = "Admin,Medeweker")];
+@inject HuisvestingAanbiederService HAS;
 
-
-
-
-
-
-
-
-
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Studenten</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var has in huisVestingAanbieders)
+    {
+      <tr class="row">
+        <td>@has.Id </td>
+        <td>@has.Name</td>
+        <td>@has.Email</td>
+        <td><button class="btn btn-primary">Woningen</button></td>
+        <td><button class="btn btn-primary">Studenten</button></td>
+        <td> <button class="btn btn-secondary"> Edit</button></td>
+        <td> <button class="btn btn-danger"> Delete</button></td>
+      </tr>
+    }
+  </tbody>
+</table>
 
 
 
 
 @code {
-  List<HuisVestingAanbieder> HuisVestingAanbieders => HuisvestingAanbiederService.GetHuisvestingAanbieders();
+  List<HuisVestingAanbieder> huisVestingAanbieders => HAS.GetHuisvestingAanbieders();
+
+
+
 
 
 }

@@ -2,7 +2,7 @@
 
 @inject NavigationManager NavigationManager
 
-<div class="top-row ps-3 navbar navbar-dark">
+<div class="top-row navbar navbar-dark ps-3">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="">SHVA</a>
 	</div>
@@ -27,16 +27,25 @@
 			<Authorized>
 				<div class="nav-item px-3">
 					<NavLink class="nav-link" href="/UserDashBoard">
-						<span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> User
+						<span class="bi bi-person-nav-menu" aria-hidden="true"></span> User
 					</NavLink>
 				</div>
 			</Authorized>
 		</AuthorizeView>
-		<AuthorizeView Roles="Admin">
+		<AuthorizeView Roles="Admin , Medewerker">
 			<Authorized>
 				<div class="nav-item px-3">
 					<NavLink class="nav-link" href="/WoningDashBoard">
-						<span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> Woning
+						<span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Woning
+					</NavLink>
+				</div>
+			</Authorized>
+		</AuthorizeView>
+		<AuthorizeView Roles="Admin , Medewerker">
+			<Authorized>
+				<div class="nav-item px-3">
+					<NavLink class="nav-link" href="/HuisVestingDashBoard">
+						<span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> HuisvestingAanbieders
 					</NavLink>
 				</div>
 			</Authorized>

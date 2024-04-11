@@ -3,6 +3,7 @@
 @page "/WoningDashBoard"
 @attribute [Authorize(Roles = "Admin , Worker")];
 @inject WoningService woningService;
+@inject NavigationManager NavigationManager
 
 <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
 
@@ -41,7 +42,7 @@
         <td>@woning.Huisvestingaanbieder</td>
         <td>
           <div class="rooms">
-            <button class="btn btn-primary">Rooms</button>
+            <button class="btn btn-primary" @onclick="()=> NavigateToRoomsPage(woning)">Rooms</button>
 
           </div>
         </td>
@@ -61,6 +62,8 @@
   List<Woning> Woningen => woningService.GetWoningen();
 
   Woning? TempWoning;
+
+  List<Room>? TempRooms;
 
   bool IsNewWoning;
 
@@ -83,11 +86,12 @@
   }
 
 
-  void OpenRoomModal()
-  {
-    //  openmodal als ik die ooit werkent krijg Fix dit a.u.bAaron!!!
-  }
+  
 
+  void NavigateToRoomsPage(Woning woning)
+  {
+    NavigationManager.NavigateTo($"/{woning.Name}/Rooms", forceLoad: true);
+  }
 
 
 }

@@ -20,6 +20,12 @@ namespace SHVA.Data.Services
       using var contex = _dbContextFactory.CreateDbContext();
       return contex.Woningen.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
     }
+    public Woning GetWoningByName(string name)
+    {
+      using var contex = _dbContextFactory.CreateDbContext();
+      return contex.Woningen.SingleOrDefault(x => x.Name == name) ?? throw new InvalidOperationException();
+    }
+
 
     public List<Woning> GetWoningen()
     {

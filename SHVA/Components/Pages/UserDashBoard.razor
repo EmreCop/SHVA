@@ -1,4 +1,4 @@
-﻿@rendermode InteractiveServer
+﻿  @rendermode InteractiveServer
 @page "/UserDashBoard"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
@@ -6,11 +6,11 @@
 @attribute [Authorize(Roles = "Admin")];
 
 <h4>Rolls</h4>
-<hr/>
+<hr />
 
 <label>Add New Role</label>
 <input type="text" @bind="NewRoleName" placeholder="Name" />
-<button class="brn btn-primary" @onclick="AddRole">Add new Role</button>
+<button class="btn btn-primary" @onclick="AddRole">Add new Role</button>
 
 <table class="table">
   <thead>
@@ -25,16 +25,17 @@
 
     @foreach (var role in Roles)
     {
-      
-      <tr>
-        <td> @role.Id </td>
-        <td> @role.Name</td>
-        @if (role.Id != "6fa6823d-3004-47ee-b55b-86554da82ee9")
-        {
-        <td><button class="btn btn-danger" @onclick="()=> roleService.DeleteRole(role.Id)">Delete</button> </td>
-        <td><button class="btn btn-primary"> Edit </button></td>
-        }
-      </tr>
+      @if (role.Id != "6fa6823d-3004-47ee-b55b-86554da82ee9" && role.Id != "34fab195-1d73-40bb-bae4-ddd5169ace39")
+      {
+        <tr>
+          <td> @role.Id </td>
+          <td> @role.Name</td>
+
+          <td><button class="btn btn-danger" @onclick="()=> roleService.DeleteRole(role.Id)">Delete</button> </td>
+          <td><button class="btn btn-primary"> Edit </button></td>
+
+        </tr>
+      }
     }
 
   </tbody>
@@ -54,11 +55,13 @@
   </thead>
   <tbody>
     @foreach (var user in Users)
-    {
-      <tr>
-        <td>@user.UserName</td>
-        <td><RollSelector RoleSelected="e => UserRoleManger(user.Id ,e)" CurentRole="@(userRoles.ContainsKey(user.Id) ? userRoles[user.Id] : null)" /></td>
-      </tr>
+    {@if (user.Id != "c17ea01a-bd38-4d4d-9c97-597c481c0542")
+      {
+        <tr>
+          <td>@user.UserName</td>
+          <td><RollSelector RoleSelected="e => UserRoleManger(user.Id ,e)" CurentRole="@(userRoles.ContainsKey(user.Id) ? userRoles[user.Id] : null)" /></td>
+        </tr>
+      }
     }
   </tbody>
 </table>
