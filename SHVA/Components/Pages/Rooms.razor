@@ -8,6 +8,12 @@
 <h4>Rooms</h4>
 <hr />
 
+@if (openmodal)
+{
+  <RoomModal room="TempRoom" Edited="Edited" woning="Woning" />
+}
+
+
 @if (Woning != null && Woning.Rooms != null)
 {
   <table class="table">
@@ -38,7 +44,7 @@
           <td>@room.MaxAllowedStudents</td>
           <td>@Woning.Name</td>
           <td><button class="btn btn-primary" >Studenten</button></td>
-          <td><button class="btn btn-secondary" >Edit</button></td>
+          <td><button class="btn btn-secondary" @onclick="()=>EditRoom(room)">Edit</button></td>
           <td><button class="btn btn-danger" @onclick="()=>RemoveRoom(roomID)">Delete</button></td>
         </tr>
       }
@@ -55,21 +61,28 @@
   public string? WoningName { get; set; }
 
   Woning? Woning { get; set; }
-    
+
+  bool Edited;
+
+  bool openmodal;
+
+  Room? TempRoom;
+
   void AddRoom()
   {
-    if (Woning != null)
+    if(Woning != null)
     {
-      if (Woning.Rooms == null)
-      {
-        Woning.Rooms = [];
-      }
-      var newRoom = new Room { WoningID = Woning.Id };
-      // andere dinge van room moeten in modal 
-      roomService.AddRoom(newRoom);
-      Woning.Rooms.Add(newRoom.Id);
-      roomService.UpdateWoning(Woning);
+      TempRoom = new Room { WoningID = Woning.Id };
+      Edited = false;
+      openmodal = true; // make hiet echte modal van Aaron
     }
+
+  }
+void EditRoom (Room room)
+    {
+      TempRoom = room;
+      Edited = true;
+    openmodal = true; // make hiet echte modal van Aaron
   }
 
   void RemoveRoom(int id)

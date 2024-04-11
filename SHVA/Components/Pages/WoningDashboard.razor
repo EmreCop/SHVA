@@ -5,13 +5,17 @@
 @inject WoningService woningService;
 @inject NavigationManager NavigationManager
 
-<button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
 
 @if (TempWoning != null)
 {
-  <WoningModal woning="TempWoning" Edited="Woningen.Contains(TempWoning)" />
+  <WoningModal woning="TempWoning"  Edited="!NewWoning"/>
 }
 
+<div>
+  <h5>Woingen</h5>
+  <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
+</div>
+<hr />
 
 <table class="table">
   <thead>
@@ -20,9 +24,9 @@
       <td scope="col">Name</td>
       <td scope="col">Description</td>
       <td scope="col">Type</td>
-      <td scope="col">Adress</td>
+      <td scope="col">Address</td>
       <td scope="col">Image</td>
-      <td scope="col">HuisvestingingAnbieder</td>
+      <td scope="col">HuisvestingingAanbieder</td>
       <td scope="col">Rooms</td>
       <td scope="col">Studenten</td>
       <td scope="col">Edit</td>
@@ -65,7 +69,7 @@
 
   List<Room>? TempRooms;
 
-  bool IsNewWoning;
+  bool NewWoning;
 
   void DeleteWoning(int Id) => woningService.DeleteWoningbyId(Id);
 
@@ -74,14 +78,14 @@
   void AddWoning()
   {
     TempWoning = new Woning { Name = "" };
-    IsNewWoning = true;
+    NewWoning = true;
     //openmodal als ik die ooit werkent krijg Fix dit a.u.b Aaron!!!
   }
 
   void EditWoning(Woning woning)
   {
     TempWoning = woning;
-    IsNewWoning = false;
+    NewWoning = false;
     //openmodal als ik die ooit werkent krijg Fix dit a.u.bAaron!!!
   }
 

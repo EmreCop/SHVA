@@ -1,6 +1,6 @@
 ﻿@rendermode InteractiveServer
 @using SHVA.Data.Services
-@attribute [Authorize(Roles = "Admin")];
+@attribute [Authorize(Roles = "Admin,Medewerker")];
 @inject WoningService woningService
 
 
@@ -15,11 +15,11 @@
     <input type="text" @bind="woning.Description" />
     <label>Type:</label>
     <input type="Type" @bind="woning.Type" />
-    <label>Adress:</label>
+    <label>Address:</label>
     <input type="text" @bind="woning.Adress" />
     <label>Image:</label>
     <input type="text" @bind="woning.Image" />
-    <label>HuisvestingingAnbieder</label>
+    <label>HuisvestingingAanbieder</label>
     <HuisVestingAanbiederSelector HuisVestingAanbiederSelected="e =>  woning.Huisvestingaanbieder = e" />
 
     <button class="btn btn-primary" @onclick="WoningManger">Save</button>
@@ -38,14 +38,17 @@
   {
     if (woning != null)
     {
-      if (!Edited)
-      {
-        woningService.AddWoning(woning);
-      }
+    
+     
+      if (Edited)
+      { woningService.UpdateWoning(woning);
+        
+      } 
       else
       {
-        woningService.UpdateWoning(woning);
+       woningService.AddWoning(woning);
       }
     }
   }
+
 }
