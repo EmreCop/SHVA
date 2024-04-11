@@ -1,25 +1,27 @@
 ﻿@inject RoomService roomService
 @rendermode InteractiveServer
+@attribute [Authorize(Roles = "Admin,Medewerker")];
 
 @if (room != null)
 {
   @*Modal*@
-  
-  <h5>Room</h5>
+  <h5>@room.Name</h5>
   <hr />
   <form>
-    <label>Name</label>
-    <input type="text"  @bind="room.Name" />
+    <label>Naam</label>
+    <input type="text" @bind="room.Name" />
 
-    <label>Image</label>
+    <label>Photo</label>
     <input type="text" @bind="room.Image" />
 
     <label>Prijs</label>
     <input type="number" @bind="room.Prijs" />
 
-    <label>Max Allowed Students</label>
+    <label>Max toegestaande students</label>
     <input type="number" @bind="room.MaxAllowedStudents" />
 
+
+    <button class="btn btn-primary" @onclick="RoomManger">Save</button>
 
   </form>
   
@@ -30,5 +32,47 @@
 @code {
   [Parameter]
   public Room? room { get; set; }
+
+  [Parameter]
+  public bool Edited { get; set; }
+
+  [Parameter]
+  public Woning? woning { get; set; }
+
+  void RoomManger()
+  {
+    if (room != null)
+    {
+      if (Edited)
+      {
+        roomService.UpdateRoom(room);
+      }
+      else
+      {
+        AddRoom();
+      }
+    }
+  }
+
+  void AddRoom()
+  {
+    if (woning != null)
+    {
+      if (woning.Rooms == null)
+      {
+        woning.Rooms = [];
+      }
+
+      if (room != null)
+      {
+        roomService.AddRoom(room);
+        woning.Rooms.Add(room.Id);
+        roomService.UpdateWoning(woning);
+      }
+    }
+  }
+
+
+
 
 }

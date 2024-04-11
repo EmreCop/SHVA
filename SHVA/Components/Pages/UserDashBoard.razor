@@ -5,6 +5,36 @@
 @inject RoleService roleService;
 @attribute [Authorize(Roles = "Admin")];
 
+
+
+<h4>Users</h4>
+<hr />
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">UserName</th>
+      <th scope="col">Email</th>>
+      <th scope="col">Email Confirmed</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @foreach (var user in Users)
+    {
+      <tr scope="row">
+        <td> @user.Id</td>
+        <td>@user.UserName </td>
+        <td>@user.Email</td>
+        <td>@user.EmailConfirmed</td>
+        <td><button class="btn btn-danger">Delete</button></td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+
 <h4>Rolls</h4>
 <hr />
 
