@@ -1,0 +1,48 @@
+﻿@rendermode InteractiveServer
+@using SHVA.Data.Services
+@attribute [Authorize(Roles = "Admin,Medeweker")];
+@inject HuisvestingAanbiederService HVAS;
+
+@if (huisVestingAanbieder != null)
+{
+  <form>
+    <label>Naam</label>
+    <input type="text" @bind="huisVestingAanbieder.Name" />
+
+    <label>Email</label>
+    <input type="text" @bind="huisVestingAanbieder.Email" />
+
+    <button class="btn btn-primary" @onclick="HVAAanbiederManager " >Save</button>
+  </form>
+}
+
+
+
+
+
+
+
+@code {
+  [Parameter]
+  public HuisVestingAanbieder? huisVestingAanbieder { get; set; }
+  [Parameter]
+  public bool newHVA { get; set; }
+
+  //HVA = HuisVestingAanbieder ik better class name verzinen shit engels volgende keer
+  void HVAAanbiederManager()
+  {
+    if (huisVestingAanbieder != null)
+    {
+      if (newHVA)
+      {
+        HVAS.AddHuisvestingAanbieder(huisVestingAanbieder);
+      }
+      else
+      {
+        HVAS.UpdateHuisvestingAanbieder(huisVestingAanbieder);
+      }
+    }
+  }
+
+
+}

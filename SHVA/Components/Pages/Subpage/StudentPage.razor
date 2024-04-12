@@ -1,0 +1,86 @@
+﻿@page "/{Type}/{Name}/Studenten"
+@inject StudentService studentService;
+@rendermode InteractiveServer
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Room</th>
+      <th scope="col">Woning</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if (Type == "Woning" && woning?.StudentenIds != null)
+    {
+      @foreach (var StudentID in woning.StudentenIds)
+      {
+        var student = studentService.GetStudentbyID(StudentID);
+        <tr>
+          <td scope="row">@student.Id</td>
+          <td>@student.Name</td>
+          <td>@student.Email</td>
+          <td>@student.RoomID</td>
+          <td>@student.WoningID</td>
+        </tr>
+      }
+    }
+
+    @if (Type == "room" && room?.StudentenIds != null)
+    {
+      @foreach (var StudentID in room.StudentenIds)
+      {
+        var student = studentService.GetStudentbyID(StudentID);
+        <tr>
+          <td scope="row">@student.Id</td>
+          <td>@student.Name</td>
+          <td>@student.Email</td>
+          <td>@student.RoomID</td>
+          <td>@student.WoningID</td>
+        </tr>
+      } 
+    }
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+@code {
+  [Parameter]
+  public string? Type { get; set; }
+
+  [Parameter]
+  public string? Name { get; set; }
+
+
+  Room? room;
+  Woning? woning;
+
+
+
+  protected override void OnInitialized()
+  {
+    if (Name != null)
+    {
+      if (Type == "Room")
+      {
+        room = studentService.GetRoomByName(Name);
+      }
+      if (Type == "Woning")
+      {
+        woning = studentService.GetWoningByName(Name);
+      }
+    }
+    base.OnInitialized();
+  }
+}

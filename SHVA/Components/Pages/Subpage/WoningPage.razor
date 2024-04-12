@@ -1,0 +1,112 @@
+﻿@page "/{HuisAanbiederName}/Woningen"
+@inject HuisvestingAanbiederService HASService;
+@inject WoningService woningService;
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+@attribute [Authorize(Roles = "Admin , Medewerker")];
+
+@if (TempWoning != null)
+{
+  <WoningModal woning="TempWoning" Edited="!NewWoning" />
+}
+
+<div>
+  <h5>Woningen</h5>
+  <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
+</div>
+<hr />
+
+
+@if (huisVestingAanbieder?.WoningIDs != null)
+{
+  <table>
+    <thead>
+      <tr>
+        <td scope="col">Id</td>
+        <td scope="col">Name</td>
+        <td scope="col">Description</td>
+        <td scope="col">Type</td>
+        <td scope="col">Address</td>
+        <td scope="col">Image</td>
+        <td scope="col">HuisvestingingAanbieder</td>
+        <td scope="col">Rooms</td>
+        <td scope="col">Studenten</td>
+        <td scope="col">Edit</td>
+        <td scope="col">Delete</td>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (int woningid in huisVestingAanbieder.WoningIDs)
+      {
+        var woning = woningService.GetWoningbyID(woningid);
+        <tr>
+          <td scope="row">@woning.Id</td>
+          <td>@woning.Name</td>
+          <td>@woning.Description</td>
+          <td>@woning.Type</td>
+          <td>@woning.Adress</td>
+          <td>@woning.Image</td>
+          <td>@woning.Huisvestingaanbieder</td>
+          <td>
+            <div class="rooms">
+              <button class="btn btn-primary" @onclick="()=> NavigateToRoomsPage(woning)">Rooms</button>
+            </div>
+          </td>
+          <td><div class="students"></div></td>
+          <td><button @onclick="()=> EditWoning(woning)" class="btn btn-primary"> Edit</button></td>
+          <td><button @onclick="()=> DeleteWoning(woning.Id)" class="btn btn-danger"> Delete</button> </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
+
+@code {
+  [Parameter]
+  public string? HuisAanbiederName { get; set; }
+
+  HuisVestingAanbieder? huisVestingAanbieder;
+
+  void DeleteWoning(int Id) => woningService.DeleteWoningbyId(Id);
+
+  Woning? TempWoning;
+
+
+  bool NewWoning;
+
+
+
+  void AddWoning()
+  {
+    TempWoning = new Woning { Name = "" };
+    NewWoning = true;
+    //openmodal als ik die ooit werkent krijg Fix dit a.u.b Aaron!!!
+  }
+
+  void EditWoning(Woning woning)
+  {
+    TempWoning = woning;
+    NewWoning = false;
+    //openmodal als ik die ooit werkent krijg Fix dit a.u.bAaron!!!
+  }
+
+
+
+  void NavigateToRoomsPage(Woning woning)
+  {
+    NavigationManager.NavigateTo($"/{woning.Name}/Rooms", forceLoad: true);
+  }
+
+
+
+  protected override void OnInitialized()
+  {
+    if (HuisAanbiederName != null)
+    {
+      huisVestingAanbieder = HASService.GetHuisvestingAanbiederbyName(HuisAanbiederName);
+    }
+  }
+
+
+  }

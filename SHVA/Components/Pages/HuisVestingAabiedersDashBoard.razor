@@ -2,8 +2,15 @@
 @using SHVA.Data.Services
 @page "/HuisVestingDashBoard"
 @attribute [Authorize(Roles = "Admin,Medeweker")];
-@inject HuisvestingAanbiederService HAS;
+@inject HuisvestingAanbiederService HVAS;
+@inject NavigationManager NavigationManager
 
+     
+<button class="btn btn-primary" @onclick="AddHuisvestingAanbieder">Add HuisVestingAanbieder</button>
+
+@if(openmodal){
+<HuisVestingAanbiederModal huisVestingAanbieder="TempHVA"  newHVA="NewHVA"/>
+}
 <table class="table">
   <thead>
     <tr>
@@ -16,16 +23,17 @@
     </tr>
   </thead>
   <tbody>
-    @foreach (var has in huisVestingAanbieders)
+    @foreach (var hVA in huisVestingAanbieders)
     {
+
       <tr class="row">
-        <td>@has.Id </td>
-        <td>@has.Name</td>
-        <td>@has.Email</td>
-        <td><button class="btn btn-primary">Woningen</button></td>
+        <td>@hVA.Id </td>
+        <td>@hVA.Name</td>
+        <td>@hVA.Email</td>
+        <td><button class="btn btn-primary" @onclick="()=>NavigateToWoningenPage(hVA)">Woningen</button></td>
         <td><button class="btn btn-primary">Studenten</button></td>
         <td> <button class="btn btn-secondary"> Edit</button></td>
-        <td> <button class="btn btn-danger"> Delete</button></td>
+        <td> <button class="btn btn-danger" @onclick="()=>DeleteHuisvestingAanbiederbyID(hVA.Id)"> Delete</button></td>
       </tr>
     }
   </tbody>
@@ -35,10 +43,41 @@
 
 
 @code {
-  List<HuisVestingAanbieder> huisVestingAanbieders => HAS.GetHuisvestingAanbieders();
+  List<HuisVestingAanbieder> huisVestingAanbieders => HVAS.GetHuisvestingAanbieders();
+
+  //hva = huisvestingaanbieder
+  // eyo aaron fix styling a.u.b shit is kapot
+  // HVA = HuisVestingAanbieder
+  HuisVestingAanbieder? TempHVA;
+
+  bool NewHVA;
+  bool openmodal; // this tempory doordat geen modal ding is 
+
+  void DeleteHuisvestingAanbiederbyID(int id) => HVAS.DeleteHuisvestingAanbiederbyId(id);
 
 
 
+  void AddHuisvestingAanbieder()
+  {
+    TempHVA = new HuisVestingAanbieder {  };
+    NewHVA = true;
+    openmodal = !openmodal;
+    //openmodal als ik die ooit werkent krijg Fix dit a.u.b Aaron!!!
+  }
+
+  void EditHuisvestingAanbieder(HuisVestingAanbieder hVA)
+  {
+    TempHVA= hVA;
+    NewHVA = false;
+    openmodal = !openmodal;
+    //openmodal als ik die ooit werkent krijg Fix dit a.u.bAaron!!!
+  }
+
+
+  void NavigateToWoningenPage(HuisVestingAanbieder huisVestingAanbieder)
+  {
+    NavigationManager.NavigateTo($"/{huisVestingAanbieder.Name}/Woningen", forceLoad: true);
+  }
 
 
 }

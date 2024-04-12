@@ -1,7 +1,7 @@
 ﻿@rendermode InteractiveServer
 @using SHVA.Data.Services
 @page "/WoningDashBoard"
-@attribute [Authorize(Roles = "Admin , Worker")];
+@attribute [Authorize(Roles = "Admin , Medewerker")];
 @inject WoningService woningService;
 @inject NavigationManager NavigationManager
 
@@ -12,7 +12,7 @@
 }
 
 <div>
-  <h5>Woingen</h5>
+  <h5>Woningen</h5>
   <button class="btn btn-primary" @onclick="AddWoning">Add Woning </button>
 </div>
 <hr />
@@ -55,7 +55,6 @@
         <td><button @onclick="()=> DeleteWoning(woning.Id)" class="btn btn-danger"> Delete</button> </td>
       </tr>
     }
-
   </tbody>
 </table>
 
@@ -66,8 +65,6 @@
   List<Woning> Woningen => woningService.GetWoningen();
 
   Woning? TempWoning;
-
-  List<Room>? TempRooms;
 
   bool NewWoning;
 
@@ -89,8 +86,6 @@
     //openmodal als ik die ooit werkent krijg Fix dit a.u.bAaron!!!
   }
 
-
-  
 
   void NavigateToRoomsPage(Woning woning)
   {

@@ -16,6 +16,12 @@ namespace SHVA.Data.Services
       using var context = _dbContextFactory.CreateDbContext();
       return context.Rooms.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
     }
+    public Room GetRoomByName(string name)
+    {
+      using var context = _dbContextFactory.CreateDbContext();
+      return context.Rooms.SingleOrDefault(x => x.Name == name) ?? throw new InvalidOperationException();
+    }
+
     public void DeleteRoom(int id)
     {
       using var context = _dbContextFactory.CreateDbContext();

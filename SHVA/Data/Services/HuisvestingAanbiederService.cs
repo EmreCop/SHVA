@@ -20,6 +20,13 @@ namespace SHVA.Data.Services
       return context.Huisvestingaanbieders.SingleOrDefault(x => x.Id == id) ?? throw new InvalidOperationException();
     }
 
+    public HuisVestingAanbieder GetHuisvestingAanbiederbyName(string name)
+    {
+      using var context = _dbContextFactory.CreateDbContext();
+      return context.Huisvestingaanbieders.SingleOrDefault(x => x.Name == name) ?? throw new InvalidOperationException();
+    }
+
+
     public List<HuisVestingAanbieder> GetHuisvestingAanbieders()
     {
       using var context = _dbContextFactory.CreateDbContext();

@@ -1,5 +1,6 @@
 ﻿@page "/{WoningName}/Rooms"
 @inject RoomService roomService
+@inject NavigationManager NavigationManager
 @rendermode InteractiveServer
 
 <button class="btn btn-primary" @onclick="AddRoom">Add Room</button>
@@ -43,7 +44,7 @@
           <td>@room.Beschikbaar</td>
           <td>@room.MaxAllowedStudents</td>
           <td>@Woning.Name</td>
-          <td><button class="btn btn-primary" >Studenten</button></td>
+          <td><button class="btn btn-primary" @onclick="()=>NavigateToStudentPage(room)">Studenten</button></td>
           <td><button class="btn btn-secondary" @onclick="()=>EditRoom(room)">Edit</button></td>
           <td><button class="btn btn-danger" @onclick="()=>RemoveRoom(roomID)">Delete</button></td>
         </tr>
@@ -70,7 +71,7 @@
 
   void AddRoom()
   {
-    if(Woning != null)
+    if (Woning != null)
     {
       TempRoom = new Room { WoningID = Woning.Id };
       Edited = false;
@@ -78,10 +79,10 @@
     }
 
   }
-void EditRoom (Room room)
-    {
-      TempRoom = room;
-      Edited = true;
+  void EditRoom(Room room)
+  {
+    TempRoom = room;
+    Edited = true;
     openmodal = true; // make hiet echte modal van Aaron
   }
 
@@ -95,6 +96,14 @@ void EditRoom (Room room)
   }
 
 
+
+  void NavigateToStudentPage(Room room)
+  {
+    NavigationManager.NavigateTo($"/{"room"}/{room.Name}/Studenten", forceLoad: true);
+  }
+
+
+
   protected override void OnInitialized()
   {
     if (WoningName != null)
@@ -102,6 +111,12 @@ void EditRoom (Room room)
       Woning = roomService.GetWoningByName(WoningName);
     }
   }
+
+
+
+
+
+
 
 }
 

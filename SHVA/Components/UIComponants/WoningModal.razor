@@ -2,6 +2,8 @@
 @using SHVA.Data.Services
 @attribute [Authorize(Roles = "Admin,Medewerker")];
 @inject WoningService woningService
+@inject HuisvestingAanbiederService HVAS; 
+@*HVAS = HuisVestingAanbiederService*@
 
 
 @*<Modal>*@
@@ -10,7 +12,7 @@
 {
   <form>
     <label>Name:</label>
-    <input type="text" @bind="woning.Name" />
+    <input required type="text" @bind="woning.Name" />
     <label>Description:</label>
     <input type="text" @bind="woning.Description" />
     <label>Type:</label>
@@ -20,7 +22,7 @@
     <label>Image:</label>
     <input type="text" @bind="woning.Image" />
     <label>HuisvestingingAanbieder</label>
-    <HuisVestingAanbiederSelector HuisVestingAanbiederSelected="e =>  woning.Huisvestingaanbieder = e" />
+    <HuisVestingAanbiederSelector  HuisVestingAanbiederSelected="e =>  woning.Huisvestingaanbieder = e" />
 
     <button class="btn btn-primary" @onclick="WoningManger">Save</button>
   </form>
@@ -38,17 +40,28 @@
   {
     if (woning != null)
     {
-    
-     
       if (Edited)
-      { woningService.UpdateWoning(woning);
-        
+      {
+
+        woningService.UpdateWoning(woning);
+
       } 
       else
       {
-       woningService.AddWoning(woning);
+        woningService.AddWoning(woning);
       }
     }
   }
+
+  // void Update()
+  // {
+  //   if(woning?.Huisvestingaanbieder != null)
+  //   {
+  //     // hVA = HuisVestingAanbieder
+  //     var hVA = HVAS.GetHuisvestingAanbiederbyID((int)woning.Huisvestingaanbieder);
+      
+
+  //   }
+  // }
 
 }

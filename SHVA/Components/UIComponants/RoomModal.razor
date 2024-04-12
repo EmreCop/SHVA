@@ -7,7 +7,7 @@
   @*Modal*@
   <form>
     <label>Naam</label>
-    <input type="text" @bind="room.Name" />
+    <input  required type="text" @bind="room.Name" />
 
     <label>Photo</label>
     <input type="text" @bind="room.Image" />
@@ -19,7 +19,7 @@
     <input type="number" @bind="room.MaxAllowedStudents" />
 
 
-    <button class="btn btn-primary" @onclick="RoomManger">Save</button>
+    <button class="btn btn-primary" @onclick="RoomManager">Save</button>
 
   </form>
   
@@ -37,7 +37,7 @@
   [Parameter]
   public Woning? woning { get; set; }
 
-  void RoomManger()
+  void RoomManager()
   {
     if (room != null)
     {
